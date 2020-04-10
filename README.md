@@ -1,4 +1,4 @@
-# Covid-19 cases locator usign React
+# Covid-19 cases locator using React
 
 To run the project,
 ## npm start
