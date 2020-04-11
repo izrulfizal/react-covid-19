@@ -39,23 +39,18 @@ class App extends Component {
 
                     el.className = "marker";
 
-                    if ((element.status== "lock down")&&(element.duration <= noOfDays)){
-                        el.className = 'marker-lockdown';
-                    }
-                    else if ((element.status== "lock down")&&(element.duration > noOfDays)){
-                        el.className = 'marker-lockdown-old';
-                    }
-                    else if ((element.status== "road closed")&&(element.duration <= noOfDays)){
-                        el.className = 'marker-road-closed';
-                    }
-                    else if ((element.status== "road closed")&&(element.duration > noOfDays)){
-                        el.className = 'marker-road-closed-old';
-                    }
-                    else if (element.duration <= noOfDays) {
-                        el.className = 'marker';        
-                    } 
-                    else {
-                        el.className = 'marker2';
+                    if (element.status == "lock down" && element.duration <= noOfDays) {
+                        el.className = "marker-lockdown";
+                    } else if (element.status == "lock down" && element.duration > noOfDays) {
+                        el.className = "marker-lockdown-old";
+                    } else if (element.status == "road closed" && element.duration <= noOfDays) {
+                        el.className = "marker-road-closed";
+                    } else if (element.status == "road closed" && element.duration > noOfDays) {
+                        el.className = "marker-road-closed-old";
+                    } else if (element.duration <= noOfDays) {
+                        el.className = "marker";
+                    } else {
+                        el.className = "marker2";
                     }
 
                     new mapboxgl.Marker(el).setLngLat([element.location.coordinates[0], element.location.coordinates[1]]).addTo(map);
