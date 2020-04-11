@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
-import data from "./components/data/map.json";
 import mapboxgl from "mapbox-gl";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 mapboxgl.accessToken = "pk.eyJ1IjoiZXJoYW5mYWRsaSIsImEiOiJjanlpcXJ0d3EwZDF2M21xaHljZXcyN2x1In0.QykinU8klSV-ZCDEi0G8rQ";
 
 class App extends Component {
@@ -24,6 +24,8 @@ class App extends Component {
             zoom: this.state.zoom,
         });
 
+        const noOfDays = 14;
+
         axios
             .get(`/api`, {})
             .then((res) => {
@@ -34,7 +36,27 @@ class App extends Component {
                 data.forEach((element) => {
                     console.log(element.location.coordinates);
                     var el = document.createElement("div");
+
                     el.className = "marker";
+
+                    if ((element.status== "lock down")&&(element.duration <= noOfDays)){
+                        el.className = 'marker-lockdown';
+                    }
+                    else if ((element.status== "lock down")&&(element.duration > noOfDays)){
+                        el.className = 'marker-lockdown-old';
+                    }
+                    else if ((element.status== "road closed")&&(element.duration <= noOfDays)){
+                        el.className = 'marker-road-closed';
+                    }
+                    else if ((element.status== "road closed")&&(element.duration > noOfDays)){
+                        el.className = 'marker-road-closed-old';
+                    }
+                    else if (element.duration <= noOfDays) {
+                        el.className = 'marker';        
+                    } 
+                    else {
+                        el.className = 'marker2';
+                    }
 
                     new mapboxgl.Marker(el).setLngLat([element.location.coordinates[0], element.location.coordinates[1]]).addTo(map);
                     //markers.push(marker);
